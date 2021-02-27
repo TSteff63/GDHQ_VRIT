@@ -24,8 +24,8 @@ TagManager:
   - Player
   - Shootable
   - ParentInteractables_ColliderConflicts
-  - 
-  - 
+  - NonPlayerCollider
+  - PlayerHands
   - 
   - 
   - 

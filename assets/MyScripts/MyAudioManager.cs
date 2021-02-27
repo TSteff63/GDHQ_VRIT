@@ -25,29 +25,43 @@ public class MyAudioManager : MonoBehaviour
     [SerializeField]
     public AudioSource _MusicSource;
     [SerializeField]
+    public AudioSource _SFXSource;
+    [SerializeField]
     public AudioClip[] _VO;
     [SerializeField]
     public AudioClip[] _music;
+    [SerializeField]
+    public AudioClip[] _SFX;
 
     ///
     /// Using singleton to trigger when audio will begin, detect when clips end.
     ///
 
+    private void Awake()
+    {
+        _instance = this;
+    }
+
     public void Start()
     {
         if(_playAudioAtStart)
-        PlayVOClip(_VO[0]);
+        PlayVOClip(0);
     }
 
-    public void PlayVOClip(AudioClip clip)
+    public void PlayVOClip(int clip)
     {
-        _VOSource.clip = clip;
+        _VOSource.clip = _VO[clip];
         _VOSource.Play();
     }
-    public void PlayMusicClip(AudioClip clip)
+    public void PlayMusicClip(int clip)
     {
-        _MusicSource.clip = clip;
+        _MusicSource.clip = _music[clip];
         _MusicSource.Play();
+    }
+    public void PlaySFXClip(int clip)
+    {
+        _SFXSource.clip = _SFX[clip];
+        _SFXSource.Play();
     }
 
 }
