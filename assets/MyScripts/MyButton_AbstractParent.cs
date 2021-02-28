@@ -17,6 +17,11 @@ public abstract class MyButton_AbstractParent : MonoBehaviour
     /// </summary>
     /// 
 
+
+    //This is to identify which game state this can be called from through events
+    [SerializeField]
+    protected int caseID;
+
     [SerializeField]
     protected bool buttonOn = false;
     [SerializeField]
@@ -40,7 +45,26 @@ public abstract class MyButton_AbstractParent : MonoBehaviour
         }
 
         _meshRender = GetComponent<MeshRenderer>();
+        _meshRender.material.EnableKeyword("_EMISSION");
+
+
+        //event to trigger flashing buttons without needing to use VR
+        EditorTool_Buttons.onClick += RunTrigger;
+
+        //event to trigger flashing buttons without needing to use VR
+        //EditorTool_Buttons.startFlashing += ActivateBtnFlash;
     }
+
+    //used by event code
+    private void RunTrigger()
+    {
+        if (_flashing)
+        {
+            StartCoroutine(DelaySwitch());
+        }
+    }
+
+
 
     //if button is interactable AND it colliders with PlayerPointer, then it can be switched ON and OFF...
     protected virtual void OnTriggerEnter(Collider other)
@@ -81,6 +105,7 @@ public abstract class MyButton_AbstractParent : MonoBehaviour
     protected virtual void OnLogic()
     {
         _meshRender.material.color = Color.green;
+        _meshRender.material.SetColor("_EmissionColor", _meshRender.material.color);
         buttonOn = true;
         _interactable = true;
     }
@@ -90,6 +115,7 @@ public abstract class MyButton_AbstractParent : MonoBehaviour
     protected virtual void OffLogic()
     {
         _meshRender.material.color = Color.red;
+        _meshRender.material.SetColor("_EmissionColor", _meshRender.material.color);
         buttonOn = false;
         _interactable = true;
     }
@@ -115,9 +141,35 @@ public abstract class MyButton_AbstractParent : MonoBehaviour
         while(_flashing)
         {
             _meshRender.material.color = Color.red;
+            _meshRender.material.SetColor("_EmissionColor", _meshRender.material.color);
             yield return new WaitForSeconds(0.33f);
             _meshRender.material.color = Color.black;
+            _meshRender.material.SetColor("_EmissionColor", _meshRender.material.color);
             yield return new WaitForSeconds(0.33f);
+        }
+    }
+    public virtual void ActivateBtnFlash_Case0()
+    {
+        if(caseID == 0)
+        {
+            _flashing = true;
+            StartCoroutine(FlashingColors());
+        }
+    }
+    public virtual void ActivateBtnFlash_Case1()
+    {
+        if (caseID == 1)
+        {
+            _flashing = true;
+            StartCoroutine(FlashingColors());
+        }
+    }
+    public virtual void ActivateBtnFlash_Case2()
+    {
+        if (caseID == 2)
+        {
+            _flashing = true;
+            StartCoroutine(FlashingColors());
         }
     }
 }

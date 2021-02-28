@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //we want this button to trigger on, then turn back off with a delay, during the on time, it will instantiate coffee gameobjects at a spawnpoint
-public class MyButton_Trigger_Derived : MyButton_AbstractParent
+public class MyButton_CoffeeTrigger_Derived : MyButton_AbstractParent
 {
     [SerializeField]
     private GameObject coffeeSpheres;
@@ -26,18 +26,10 @@ public class MyButton_Trigger_Derived : MyButton_AbstractParent
         //coffee will only instantiate as long as the audio clip is playing
         maxCoffeeToProduce = (MyAudioManager.Instance._SFX[7].length + 3);
 
-        //event to trigger flashing buttons without needing to use VR
-        EditorTool_Buttons.onClick += RunTrigger;
+        //start flashing, enable _isflashing
+        GameManager.startFlashing_case0_Coffee += ActivateBtnFlash;
     }
 
-    //used by event code
-    private void RunTrigger()
-    {
-        if (_flashing)
-        {
-            StartCoroutine(DelaySwitch());
-        }
-    }
 
     protected override IEnumerator DelaySwitch()
     {
@@ -98,6 +90,7 @@ public class MyButton_Trigger_Derived : MyButton_AbstractParent
         buttonOn = true;
                 Debug.Log("Turn Green");
         _meshRender.material.color = Color.green;
+        _meshRender.material.SetColor("_EmissionColor", _meshRender.material.color);
         //_interactable = true;
     }
 }

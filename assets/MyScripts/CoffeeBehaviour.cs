@@ -15,4 +15,17 @@ public class CoffeeBehaviour : MonoBehaviour
 
         rb.AddForce(initialForce, ForceMode.Impulse);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "MouthAreaToEat")
+        {
+            Debug.Log("Consuming Food or Drink");
+            //play sound for sipping coffee, this should not be interrupted if more coffee collides with mouth area
+            if (MyAudioManager.Instance._SFXSource.isPlaying == false)
+            {
+                MyAudioManager.Instance.PlaySFXClip(6);
+            }
+        }
+    }
 }

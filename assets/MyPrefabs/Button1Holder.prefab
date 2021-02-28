@@ -46,6 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonOn: 0
   _interactable: 1
+  _flashing: 0
+  anim: {fileID: 0}
   buttonDelayTime: 0.33
 --- !u!1 &8947004945993800603
 GameObject:
@@ -140,6 +142,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 585b6ff37a79c4238897bdb1963f4c85,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2e149ac100d472c4e971734675181f4e, type: 2}
     - target: {fileID: -927199367670048503, guid: 585b6ff37a79c4238897bdb1963f4c85,
         type: 3}
       propertyPath: m_Name

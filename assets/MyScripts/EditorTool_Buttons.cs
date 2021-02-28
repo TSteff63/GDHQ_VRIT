@@ -6,6 +6,7 @@ public class EditorTool_Buttons : MonoBehaviour
 {
     public delegate void ActionClick();
     public static event ActionClick onClick;
+    //public static event ActionClick startFlashing;
 
     public void BtnClick()
     {

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5872268549867116640}
   - component: {fileID: 1545774920}
   - component: {fileID: 1545774925}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: CoffeeSphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}

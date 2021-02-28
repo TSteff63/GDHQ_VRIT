@@ -8,6 +8,7 @@ TagManager:
   - EnemyHitArea
   - ShootableProps
   - PlayerPointer
+  - MouthAreaToEat
   layers:
   - Default
   - TransparentFX
@@ -26,8 +27,8 @@ TagManager:
   - ParentInteractables_ColliderConflicts
   - NonPlayerCollider
   - PlayerHands
-  - 
-  - 
+  - MouthAreaToEat
+  - FoodDrink
   - 
   - 
   - 
