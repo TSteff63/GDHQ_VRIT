@@ -4,18 +4,11 @@ using UnityEngine;
 
 public abstract class MyButton_AbstractParent : MonoBehaviour
 {
-    /*
-     * Abstract classes for buttons
-        Button Challenge - Should know if button is on or off, if on turn green, if off, mesh renderer turns red...
-        Delay between how fast the button can be pressed
-*/
-
     /// <summary>  Abstract classes
     ///   Public: Can be seen and changed by any other class.
     ///  Private: Can be seen and changed only within the class it was created.
     ///Protected: Can be seen and changed within the class it was created, and any derived classes.
     /// </summary>
-    /// 
 
 
     //This is to identify which game state this can be called from through events
@@ -49,10 +42,21 @@ public abstract class MyButton_AbstractParent : MonoBehaviour
 
 
         //event to trigger flashing buttons without needing to use VR
-        EditorTool_Buttons.onClick += RunTrigger;
+        //EditorTool_Buttons.onClick += RunTrigger;
+
+        if (caseID == 0)
+        {
+            //start flashing, enable _isflashing
+            GameManager.startFlashing_case0_Coffee += ActivateBtnFlash;
+        }
+        else if (caseID == 1)
+        {
+            GameManager.startFlashing_case1_EighteenButtons += ActivateBtnFlash;
+        }
 
         //event to trigger flashing buttons without needing to use VR
         //EditorTool_Buttons.startFlashing += ActivateBtnFlash;
+        EditorTool_Buttons.onClick += RunTrigger;
     }
 
     //used by event code
@@ -71,12 +75,6 @@ public abstract class MyButton_AbstractParent : MonoBehaviour
     {
         if ((_interactable) && (other.tag == "PlayerPointer"))
         {
-            //if running while loop for flashing, end it
-            if (_flashing)
-            {
-                _flashing = false;
-            }
-
             //Start method to press / release button
             StartCoroutine("DelaySwitch");
         }
@@ -88,6 +86,13 @@ public abstract class MyButton_AbstractParent : MonoBehaviour
         //during button press, it cannot be activated again until coroutine is over
         _interactable = false;
         anim.SetTrigger("Pressed");
+
+        //if running while loop for flashing, end it
+        if (_flashing)
+        {
+            _flashing = false;
+            Debug.Log("Disable flashing");
+        }
 
         yield return new WaitForSeconds(buttonDelayTime);
         if (buttonOn)
@@ -125,14 +130,9 @@ public abstract class MyButton_AbstractParent : MonoBehaviour
     //public method that will swap colors on a loop
     public virtual void ActivateBtnFlash()
     {
+        Debug.Log("Playing Event Action");
         _flashing = true;
         StartCoroutine(FlashingColors());
-    }
-
-    //if we need to reset buttons or stop flashing for any reason, we can call this method
-    public virtual void DisableBtnFlash()
-    {
-        _flashing = false;
     }
 
     //swap color based on yield return new WaitForSeconds value until the button is pressed or disabled by another method
@@ -146,30 +146,11 @@ public abstract class MyButton_AbstractParent : MonoBehaviour
             _meshRender.material.color = Color.black;
             _meshRender.material.SetColor("_EmissionColor", _meshRender.material.color);
             yield return new WaitForSeconds(0.33f);
-        }
-    }
-    public virtual void ActivateBtnFlash_Case0()
-    {
-        if(caseID == 0)
-        {
-            _flashing = true;
-            StartCoroutine(FlashingColors());
-        }
-    }
-    public virtual void ActivateBtnFlash_Case1()
-    {
-        if (caseID == 1)
-        {
-            _flashing = true;
-            StartCoroutine(FlashingColors());
-        }
-    }
-    public virtual void ActivateBtnFlash_Case2()
-    {
-        if (caseID == 2)
-        {
-            _flashing = true;
-            StartCoroutine(FlashingColors());
+            if(!_flashing)
+            {
+                _meshRender.material.color = Color.green;
+                _meshRender.material.SetColor("_EmissionColor", _meshRender.material.color);
+            }
         }
     }
 }

@@ -16,10 +16,12 @@ public class EditorTool_InspectorButtonActions : Editor
             myScript.BtnClick();
         }
 
+        /*
         GameManager gmScript = (GameManager)target;
         if (GUILayout.Button("Start Event 0 - Coffee"))
         {
             gmScript.StateMachine(0);
         }
+        */
     }
 }

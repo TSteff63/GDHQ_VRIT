@@ -19,16 +19,16 @@ public class MyButton_CoffeeTrigger_Derived : MyButton_AbstractParent
     [SerializeField]
     private float maxCoffeeToProduce;  //amount of coffee spheres to create before breaking the loop.
 
+    
     protected override void Start()
     {
         base.Start();
 
         //coffee will only instantiate as long as the audio clip is playing
         maxCoffeeToProduce = (MyAudioManager.Instance._SFX[7].length + 3);
-
-        //start flashing, enable _isflashing
-        GameManager.startFlashing_case0_Coffee += ActivateBtnFlash;
     }
+
+
 
 
     protected override IEnumerator DelaySwitch()
@@ -48,6 +48,12 @@ public class MyButton_CoffeeTrigger_Derived : MyButton_AbstractParent
 
         //bool triggers that this is ON
         //Color of button turns GREEN
+        //if running while loop for flashing, end it
+        if (_flashing)
+        {
+            _flashing = false;
+            Debug.Log("Disable flashing");
+        }
         OnLogic();
 
         //play clip for coffee brewing
@@ -56,7 +62,7 @@ public class MyButton_CoffeeTrigger_Derived : MyButton_AbstractParent
         //reset coffee count, in the case user turns on coffee machine again.
         currentCoffeeCount = 0;
 
-        Debug.Log("Coffee machine is ON, waiting " + buttonDelayTime + " seonds to proceed...");
+        Debug.Log("Coffee machine is ON, waiting " + buttonDelayTime + " seconds to proceed...");
         //this delay will allow the audio to begin and act like the machine is heating/brewing coffee
         yield return new WaitForSeconds(buttonDelayTime);
 
