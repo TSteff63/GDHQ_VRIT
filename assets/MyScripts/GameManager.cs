@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,10 +13,16 @@ public class GameManager : MonoBehaviour
     public static event ActionCase startFlashing_case1_EighteenButtons;
     public static event ActionCase startFlashing_case2_AutoPilot;
 
+    //place on throttle button script
+    public static Action<int> OnPlayTimeline;
+    /// <summary>
+    /// //////////////////////////////////////////////
+    /// </summary>
+
     public timelinePosition enumPosition;
 
-    public int buttonsPressed_top;
-    public int buttonsPressed_btm;
+    private int buttonsPressed_top;
+    private int buttonsPressed_btm;
     private bool reminderToPressBtnsVO_HasPlayed;
 
     private void Start()
@@ -35,6 +42,8 @@ public class GameManager : MonoBehaviour
 
     IEnumerator StartCaseZero()
     {
+        MyAudioManager.Instance.PlayMusicClip(0);
+        yield return new WaitForSeconds(3);
         MyAudioManager.Instance.PlayVOClip(0);
         yield return new WaitForSeconds(MyAudioManager.Instance._VO[0].length);
 
@@ -123,7 +132,8 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         //"Press the button for Auto-Pilot"
-        MyAudioManager.Instance.PlayVOClip(2);
+        MyAudioManager.Instance.PlayVOClip(3);
+        yield return new WaitForSeconds(MyAudioManager.Instance._VO[3].length);
         //Autopilot button begins flashing
         if (startFlashing_case2_AutoPilot != null)
         {

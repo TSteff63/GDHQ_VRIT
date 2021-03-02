@@ -53,6 +53,10 @@ public abstract class MyButton_AbstractParent : MonoBehaviour
         {
             GameManager.startFlashing_case1_EighteenButtons += ActivateBtnFlash;
         }
+        else if (caseID == 2)
+        {
+            GameManager.startFlashing_case2_AutoPilot += ActivateBtnFlash;
+        }
 
         //event to trigger flashing buttons without needing to use VR
         //EditorTool_Buttons.startFlashing += ActivateBtnFlash;

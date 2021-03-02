@@ -14,10 +14,13 @@ public class MyButton_PushTrigger_Derived : MyButton_AbstractParent
     [SerializeField]
     private bool isBottomConsoleButton;
 
+    [SerializeField]
+    private bool sendCountEvent;
+
     protected override void OnLogic()
     {
         base.OnLogic();
-        if(buttonOn)
+        if((buttonOn) && (sendCountEvent))
         {
             if (isBottomConsoleButton)
             {
@@ -41,13 +44,13 @@ public class MyButton_PushTrigger_Derived : MyButton_AbstractParent
     protected override void OffLogic()
     {
         base.OffLogic();
-        if (!buttonOn)
+        if ((!buttonOn) && (sendCountEvent))
         {
             if (isBottomConsoleButton)
             {
                 if (BtmConsoleCountDecrease != null)
                 {
-                    Debug.Log("Count increased");
+                    Debug.Log("Count decreased");
                     BtmConsoleCountDecrease();
                 }
             }
@@ -55,7 +58,7 @@ public class MyButton_PushTrigger_Derived : MyButton_AbstractParent
             {
                 if (TopConsoleCountDecrease != null)
                 {
-                    Debug.Log("Count increased");
+                    Debug.Log("Count decreased");
                     TopConsoleCountDecrease();
                 }
             }
