@@ -71,12 +71,12 @@ Material:
     - _Banding: 0
     - _Bands: 3
     - _BumpScale: 1
-    - _BurnSize: 0
+    - _BurnSize: 0.5
     - _CircleMask: 0
-    - _Contrast: 0.75
+    - _Contrast: 0.98
     - _Culling: 1
-    - _Cutoff: 1
-    - _CutoffSoftness: 0.082
+    - _Cutoff: 0.75
+    - _CutoffSoftness: 0.33
     - _DetailNormalMapScale: 1
     - _DisplacementAmount: 0
     - _DstBlend: 0
@@ -84,14 +84,14 @@ Material:
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _InnerRadius: 0
-    - _IntersectionThresholdMax: 1
+    - _IntersectionThresholdMax: 0.9
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _OuterRadius: 0.5
     - _Parallax: 0.02
     - _PolarCoords: 0
-    - _Power: 0.71
+    - _Power: 0.75
     - _RectHeight: 0
     - _RectMask: 0
     - _RectMaskCutoff: 0

@@ -13,12 +13,6 @@ public class GameManager : MonoBehaviour
     public static event ActionCase startFlashing_case1_EighteenButtons;
     public static event ActionCase startFlashing_case2_AutoPilot;
 
-    //place on throttle button script
-    public static Action<int> OnPlayTimeline;
-    /// <summary>
-    /// //////////////////////////////////////////////
-    /// </summary>
-
     public timelinePosition enumPosition;
 
     private int buttonsPressed_top;
@@ -51,6 +45,9 @@ public class GameManager : MonoBehaviour
         {
             startFlashing_case0_Coffee();
         }
+        yield return new WaitForSeconds(30);
+        enumPosition = timelinePosition.case1_EighteenButtons;
+        StateMachine(enumPosition);
     }
 
 
@@ -163,7 +160,7 @@ public class GameManager : MonoBehaviour
                 //start of the game, Play initial audio, THEN coffee light flashes, player is prompted to push this button
             case timelinePosition.case0_Coffee:
                 //StartCoroutine(StartCaseZero());
-                StartCoroutine(StartCaseZeroEDITORTEST());
+                StartCoroutine(StartCaseZero());
                 break;
 
             case timelinePosition.case1_EighteenButtons:
@@ -205,6 +202,10 @@ public class GameManager : MonoBehaviour
         {
             startFlashing_case0_Coffee();
         }
+
+        yield return new WaitForSeconds(10);
+        enumPosition = timelinePosition.case1_EighteenButtons;
+        StateMachine(enumPosition);
     }
 
 }

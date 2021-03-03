@@ -136,6 +136,7 @@ public abstract class MyButton_AbstractParent : MonoBehaviour
     {
         Debug.Log("Playing Event Action");
         _flashing = true;
+        _interactable = true;
         StartCoroutine(FlashingColors());
     }
 

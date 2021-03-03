@@ -14,6 +14,9 @@ public class CoffeeBehaviour : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 
         rb.AddForce(initialForce, ForceMode.Impulse);
+
+        //if this object is still around after 30 seconds, destroy it
+        Destroy(this.gameObject, 30);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -26,6 +29,8 @@ public class CoffeeBehaviour : MonoBehaviour
             {
                 MyAudioManager.Instance.PlaySFXClip(6);
             }
+
+            Destroy(this.gameObject);
         }
     }
 }

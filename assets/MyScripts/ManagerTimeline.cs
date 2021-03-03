@@ -24,13 +24,15 @@ public class ManagerTimeline : MonoBehaviour
 
     public void Start()
     {
-        GameManager.OnPlayTimeline += PlayFromTimelines;
+        MyButton_ThrottleButton_Derived.OnPlayTimeline += PlayFromTimelines;
     }
 
 
 
     public void PlayFromTimelines(int index)
     {
+        Debug.Log("Play Timeline Sequence");
+
         TimelineAsset selectedAsset;
 
         if (timelines.Count <= index)
