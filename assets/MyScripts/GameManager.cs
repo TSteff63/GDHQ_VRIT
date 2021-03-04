@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public enum timelinePosition {case0_Coffee, case1_EighteenButtons, case2_WarpSpeed };
+    public enum timelinePosition {case0_Coffee, case1_SixteenButtons, case2_WarpSpeed, case3_AsteroidSequence };
 
     //Event sender
     public delegate void ActionCase();
     public static event ActionCase startFlashing_case0_Coffee;
-    public static event ActionCase startFlashing_case1_EighteenButtons;
+    public static event ActionCase startFlashing_case1_SixteenButtons;
     public static event ActionCase startFlashing_case2_AutoPilot;
 
     public timelinePosition enumPosition;
@@ -45,8 +45,8 @@ public class GameManager : MonoBehaviour
         {
             startFlashing_case0_Coffee();
         }
-        yield return new WaitForSeconds(30);
-        enumPosition = timelinePosition.case1_EighteenButtons;
+        yield return new WaitForSeconds(20);
+        enumPosition = timelinePosition.case1_SixteenButtons;
         StateMachine(enumPosition);
     }
 
@@ -65,19 +65,19 @@ public class GameManager : MonoBehaviour
         buttonsPressed_btm = 0;
         MyAudioManager.Instance.PlayVOClip(1);
 
-        if (startFlashing_case1_EighteenButtons != null)
+        if (startFlashing_case1_SixteenButtons != null)
         {
-            startFlashing_case1_EighteenButtons();
+            startFlashing_case1_SixteenButtons();
         }
     }
 
     private void IncreaseTopButtonCount()
     {
-        if (enumPosition == timelinePosition.case1_EighteenButtons)
+        if (enumPosition == timelinePosition.case1_SixteenButtons)
         {
             buttonsPressed_top++;
 
-            if ((buttonsPressed_btm == 10) && (buttonsPressed_top == 8))
+            if ((buttonsPressed_btm == 8) && (buttonsPressed_top == 8))
             {
                 enumPosition = timelinePosition.case2_WarpSpeed;
                 StateMachine(enumPosition);
@@ -86,23 +86,23 @@ public class GameManager : MonoBehaviour
     }
     private void DecreaseTopButtonCount()
     {
-        if (enumPosition == timelinePosition.case1_EighteenButtons)
+        if (enumPosition == timelinePosition.case1_SixteenButtons)
         {
             buttonsPressed_top--;
         }
     }
     private void IncreaseBtmButtonCount()
     {
-        if (enumPosition == timelinePosition.case1_EighteenButtons)
+        if (enumPosition == timelinePosition.case1_SixteenButtons)
         {
             buttonsPressed_btm++;
-            if ((buttonsPressed_btm == 10) && (!reminderToPressBtnsVO_HasPlayed) && (buttonsPressed_top != 8))
+            if ((buttonsPressed_btm == 8) && (!reminderToPressBtnsVO_HasPlayed) && (buttonsPressed_top != 8))
             {
                 MyAudioManager.Instance.PlayVOClip(2);
                 reminderToPressBtnsVO_HasPlayed = true;
             }
 
-            if ((buttonsPressed_btm == 10) && (buttonsPressed_top == 8))
+            if ((buttonsPressed_btm == 8) && (buttonsPressed_top == 8))
             {
                 enumPosition = timelinePosition.case2_WarpSpeed;
                 StateMachine(enumPosition);
@@ -111,7 +111,7 @@ public class GameManager : MonoBehaviour
     }
     private void DecreaseBtmButtonCount()
     {
-        if (enumPosition == timelinePosition.case1_EighteenButtons)
+        if (enumPosition == timelinePosition.case1_SixteenButtons)
         {
             buttonsPressed_btm--;
         }
@@ -145,7 +145,13 @@ public class GameManager : MonoBehaviour
     }
 
 
+    IEnumerator StartCaseThree_EDITORTEST()
+    {
+        //Start Timeline sequence for asteroid warp
+        yield return new WaitForSeconds(1);
+        ManagerTimeline.Instance.PlayFromTimelines(1);
 
+    }
 
 
 
@@ -159,11 +165,11 @@ public class GameManager : MonoBehaviour
         {
                 //start of the game, Play initial audio, THEN coffee light flashes, player is prompted to push this button
             case timelinePosition.case0_Coffee:
-                //StartCoroutine(StartCaseZero());
                 StartCoroutine(StartCaseZero());
+                //StartCoroutine(StartCaseZeroEDITORTEST());
                 break;
 
-            case timelinePosition.case1_EighteenButtons:
+            case timelinePosition.case1_SixteenButtons:
                 //Player has attempted to drink coffee, a new sound clip plays prompting the user to press flashing buttons
                 //these buttons are on the front middle console level to the player and front middle console above player, roughly 16 buttons will be flashing
                 StartCoroutine(StartCaseOne());
@@ -179,9 +185,10 @@ public class GameManager : MonoBehaviour
             //at end of track, VO clip plays instructing player to flip open a cover that reveals another button to press.  This will enable the warp drive
                 break;
 
-            //            case 3:
-            //warp sounds start to play and visuals begin to change
-            //                break;
+            case timelinePosition.case3_AsteroidSequence:
+                StartCoroutine(StartCaseThree_EDITORTEST());
+                //warp sounds start to play and visuals begin to change
+                break;
 
             default:
                 break;
@@ -204,7 +211,7 @@ public class GameManager : MonoBehaviour
         }
 
         yield return new WaitForSeconds(10);
-        enumPosition = timelinePosition.case1_EighteenButtons;
+        enumPosition = timelinePosition.case1_SixteenButtons;
         StateMachine(enumPosition);
     }
 

@@ -75,7 +75,7 @@ Material:
     - _CircleMask: 0
     - _Contrast: 0.98
     - _Culling: 1
-    - _Cutoff: 0.75
+    - _Cutoff: 0.33
     - _CutoffSoftness: 0.33
     - _DetailNormalMapScale: 1
     - _DisplacementAmount: 0

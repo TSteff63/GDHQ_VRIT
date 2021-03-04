@@ -7,8 +7,26 @@ using UnityEngine.Playables;
 
 public class ManagerTimeline : MonoBehaviour
 {
+    private static ManagerTimeline _instance;
+    public static ManagerTimeline Instance
+    {
+        get
+        {
+            if (_instance == null)
+                Debug.LogError("The timeline manager is NULL");
+
+            return _instance;
+        }
+    }
+
     public List<PlayableDirector> playableDirectors;
     public List<TimelineAsset> timelines;
+
+
+    private void Awake()
+    {
+        _instance = this;
+    }
 
     //public static Action OnPlayTimeline;
 
@@ -21,12 +39,6 @@ public class ManagerTimeline : MonoBehaviour
         }
     }
     */
-
-    public void Start()
-    {
-        MyButton_ThrottleButton_Derived.OnPlayTimeline += PlayFromTimelines;
-    }
-
 
 
     public void PlayFromTimelines(int index)

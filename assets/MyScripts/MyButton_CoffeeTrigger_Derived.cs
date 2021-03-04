@@ -41,7 +41,7 @@ public class MyButton_CoffeeTrigger_Derived : MyButton_AbstractParent
         anim.SetTrigger("Pressed");
 
         //Play Audio from MyAudioManager singleton of button click
-        MyAudioManager.Instance.PlaySFXClip(3);
+        PlaySound();
 
         //wait for the sound effect to finish
         yield return new WaitForSeconds(0.33f);
@@ -96,7 +96,5 @@ public class MyButton_CoffeeTrigger_Derived : MyButton_AbstractParent
         buttonOn = true;
                 Debug.Log("Turn Green");
         _meshRender.material.color = Color.green;
-        _meshRender.material.SetColor("_EmissionColor", _meshRender.material.color);
-        //_interactable = true;
     }
 }

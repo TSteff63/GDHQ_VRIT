@@ -12,7 +12,7 @@ namespace Cinemachine
         private float timer;
 
 
-
+        //called from timeline
         public void AdjustSpeed(float _speed)
         {
             timer = 0;

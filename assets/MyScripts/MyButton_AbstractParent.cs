@@ -36,10 +36,12 @@ public abstract class MyButton_AbstractParent : MonoBehaviour
         {
             anim = GetComponent<Animator>();
         }
+        if (anim == null)
+        {
+            anim = GetComponentInParent<Animator>();
+        }
 
         _meshRender = GetComponent<MeshRenderer>();
-        _meshRender.material.EnableKeyword("_EMISSION");
-
 
         //event to trigger flashing buttons without needing to use VR
         //EditorTool_Buttons.onClick += RunTrigger;
@@ -51,12 +53,16 @@ public abstract class MyButton_AbstractParent : MonoBehaviour
         }
         else if (caseID == 1)
         {
-            GameManager.startFlashing_case1_EighteenButtons += ActivateBtnFlash;
+            GameManager.startFlashing_case1_SixteenButtons += ActivateBtnFlash;
         }
         else if (caseID == 2)
         {
             GameManager.startFlashing_case2_AutoPilot += ActivateBtnFlash;
         }
+        //else if (caseID == 3)
+        //{
+        //    GameManager.startFlashing_case3_PrepareToWarp += ActivateBtnFlash;
+        //}
 
         //event to trigger flashing buttons without needing to use VR
         //EditorTool_Buttons.startFlashing += ActivateBtnFlash;
@@ -91,6 +97,9 @@ public abstract class MyButton_AbstractParent : MonoBehaviour
         _interactable = false;
         anim.SetTrigger("Pressed");
 
+        //Play Sound
+        PlaySound();
+
         //if running while loop for flashing, end it
         if (_flashing)
         {
@@ -107,6 +116,8 @@ public abstract class MyButton_AbstractParent : MonoBehaviour
         {
             OnLogic();
         }
+
+        AddtionalAction();
     }
 
     //Logic for when the button is turned ON...
@@ -114,7 +125,6 @@ public abstract class MyButton_AbstractParent : MonoBehaviour
     protected virtual void OnLogic()
     {
         _meshRender.material.color = Color.green;
-        _meshRender.material.SetColor("_EmissionColor", _meshRender.material.color);
         buttonOn = true;
         _interactable = true;
     }
@@ -124,7 +134,6 @@ public abstract class MyButton_AbstractParent : MonoBehaviour
     protected virtual void OffLogic()
     {
         _meshRender.material.color = Color.red;
-        _meshRender.material.SetColor("_EmissionColor", _meshRender.material.color);
         buttonOn = false;
         _interactable = true;
     }
@@ -137,6 +146,14 @@ public abstract class MyButton_AbstractParent : MonoBehaviour
         Debug.Log("Playing Event Action");
         _flashing = true;
         _interactable = true;
+
+        //puts buttons back into the OFF position in case they were on before they started flashing
+        //This prevents any weird animation conflicts and count issues.
+        if(buttonOn)
+        {
+            buttonOn = false;
+            anim.SetTrigger("Pressed");
+        }
         StartCoroutine(FlashingColors());
     }
 
@@ -146,16 +163,23 @@ public abstract class MyButton_AbstractParent : MonoBehaviour
         while(_flashing)
         {
             _meshRender.material.color = Color.red;
-            _meshRender.material.SetColor("_EmissionColor", _meshRender.material.color);
             yield return new WaitForSeconds(0.33f);
             _meshRender.material.color = Color.black;
-            _meshRender.material.SetColor("_EmissionColor", _meshRender.material.color);
             yield return new WaitForSeconds(0.33f);
             if(!_flashing)
             {
                 _meshRender.material.color = Color.green;
-                _meshRender.material.SetColor("_EmissionColor", _meshRender.material.color);
             }
         }
+    }
+
+    protected virtual void PlaySound()
+    {
+        MyAudioManager.Instance.PlaySFXClip(3);
+    }
+
+    protected virtual void AddtionalAction()
+    {
+        //For any derived class that wants to use an additional action when button is triggered
     }
 }
