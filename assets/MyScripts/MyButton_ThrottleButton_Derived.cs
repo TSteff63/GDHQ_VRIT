@@ -22,7 +22,7 @@ public class MyButton_ThrottleButton_Derived : MyButton_AbstractParent
             MyAudioManager.Instance.PlaySFXClip(16);
             Debug.Log("Launch action from trigger button");
             //start launch sequence on timeline
-            ManagerTimeline.Instance.PlayFromTimelines(0);
+            ManagerTimeline.Instance.PlayFromTimelines(0, 0);
             //OnPlayTimeline(0);
             //prevents launch sequence from replaying due to multiple button presses
             hasAlreadyPlayed = true;

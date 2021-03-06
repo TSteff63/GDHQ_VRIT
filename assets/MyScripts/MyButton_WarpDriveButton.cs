@@ -11,6 +11,9 @@ public class MyButton_WarpDriveButton : MyButton_AbstractParent
     [SerializeField]
     private int timelineSelection;
 
+    [SerializeField]
+    private int directorSelection;
+
 
     protected override void OnLogic()
     {
@@ -19,18 +22,24 @@ public class MyButton_WarpDriveButton : MyButton_AbstractParent
         if (!hasAlreadyPlayed)
         {
             //Play the next timeline sequence
-            ManagerTimeline.Instance.PlayFromTimelines(timelineSelection);
+            ManagerTimeline.Instance.PlayFromTimelines(timelineSelection, directorSelection);
 
             //prevents warp sequence from replaying due to multiple button presses
             hasAlreadyPlayed = true;
         }
     }
 
-    public void changeTimelineSequence(int newValue)
+    public void ChangeTimelineSequence(int newTimeline)
     {
         //changes the next timeline to proceed to
-        timelineSelection = newValue;
+        timelineSelection = newTimeline;
         //allows button press to launch the next timeline sequence
         hasAlreadyPlayed = false;
+    }
+
+    public void ChangeDirector(int newDirector)
+    {
+        //changes the next director to proceed to, should run this method along side change timeline sequence method
+        directorSelection = newDirector;
     }
 }

@@ -41,7 +41,7 @@ public class ManagerTimeline : MonoBehaviour
     */
 
 
-    public void PlayFromTimelines(int index)
+    public void PlayFromTimelines(int index, int director)
     {
         Debug.Log("Play Timeline Sequence");
 
@@ -56,6 +56,6 @@ public class ManagerTimeline : MonoBehaviour
             selectedAsset = timelines[index];
         }
 
-        playableDirectors[0].Play(selectedAsset);
+        playableDirectors[director].Play(selectedAsset);
     }
 }

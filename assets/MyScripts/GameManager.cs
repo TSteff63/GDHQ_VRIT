@@ -5,19 +5,26 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public enum timelinePosition {case0_Coffee, case1_SixteenButtons, case2_WarpSpeed, case3_AsteroidSequence };
+    public enum timelinePosition {case0_Coffee, case1_SixteenButtons, case2_WarpSpeed, case3_AsteroidSequence, case4_RepairMode };
 
     //Event sender
     public delegate void ActionCase();
     public static event ActionCase startFlashing_case0_Coffee;
     public static event ActionCase startFlashing_case1_SixteenButtons;
     public static event ActionCase startFlashing_case2_AutoPilot;
+    public static event ActionCase disableButtons_case4_RepairMode;
+    public static event ActionCase enableButtons_case4_RepairMode;
 
     public timelinePosition enumPosition;
 
     private int buttonsPressed_top;
     private int buttonsPressed_btm;
     private bool reminderToPressBtnsVO_HasPlayed;
+
+    [SerializeField]
+    private GameObject AsteroidHolder;
+    [SerializeField]
+    private ParticleSystem FX_Asteroids;
 
     private void Start()
     {
@@ -29,7 +36,6 @@ public class GameManager : MonoBehaviour
         MyButton_PushTrigger_Derived.TopConsoleCountIncrease += IncreaseTopButtonCount;
         MyButton_PushTrigger_Derived.TopConsoleCountDecrease += DecreaseTopButtonCount;
     }
-
 
 
 
@@ -149,17 +155,51 @@ public class GameManager : MonoBehaviour
     {
         //Start Timeline sequence for asteroid warp
         yield return new WaitForSeconds(1);
-        ManagerTimeline.Instance.PlayFromTimelines(1);
+        ManagerTimeline.Instance.PlayFromTimelines(1, 1);
+    }
 
+    public void EnableAsteroids(bool setEnable)
+    {
+        AsteroidHolder.SetActive(setEnable);
+        if (setEnable)
+        {
+            FX_Asteroids.Play();
+        }
+        else
+        {
+            FX_Asteroids.Stop();
+        }
+    }
+
+    IEnumerator StartCaseFour()
+    {
+        //Start Timeline sequence for asteroid warp
+        yield return new WaitForSeconds(1);
+        ManagerTimeline.Instance.PlayFromTimelines(2, 2);
+    }
+
+    public void DisableAllButtons(bool newValue)
+    {
+        if (newValue)
+        {
+            //used for when power shuts down during case 4
+            if (disableButtons_case4_RepairMode != null)
+            {
+                disableButtons_case4_RepairMode();
+            }
+        }
+        else
+        {
+            if (enableButtons_case4_RepairMode != null)
+            {
+                enableButtons_case4_RepairMode();
+            }
+        }
     }
 
 
 
-
-
-
-
-    public void StateMachine(timelinePosition currentPosition)
+public void StateMachine(timelinePosition currentPosition)
     {
         switch (currentPosition)
         {
@@ -188,6 +228,10 @@ public class GameManager : MonoBehaviour
             case timelinePosition.case3_AsteroidSequence:
                 StartCoroutine(StartCaseThree_EDITORTEST());
                 //warp sounds start to play and visuals begin to change
+                break;
+
+            case timelinePosition.case4_RepairMode:
+                StartCoroutine(StartCaseFour());
                 break;
 
             default:

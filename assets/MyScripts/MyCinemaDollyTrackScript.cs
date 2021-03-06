@@ -11,6 +11,8 @@ namespace Cinemachine
         public float maxLerpTime = 1f;
         private float timer;
 
+        [SerializeField]
+        private CinemachineSmoothPath[] paths;
 
         //called from timeline
         public void AdjustSpeed(float _speed)
@@ -48,6 +50,15 @@ namespace Cinemachine
             endSpeed = (m_Speed + 2);
         }
 
+        public void ChangePath(int i)
+        {
+            m_Path = paths[i];
+        }
+
+        public void ResetPosition(float i)
+        {
+            m_Position = i;
+        }
 
 
 

@@ -64,6 +64,8 @@ public abstract class MyButton_AbstractParent : MonoBehaviour
         //    GameManager.startFlashing_case3_PrepareToWarp += ActivateBtnFlash;
         //}
 
+        GameManager.disableButtons_case4_RepairMode += DisableButtons;
+        GameManager.enableButtons_case4_RepairMode += EnableButtons;
         //event to trigger flashing buttons without needing to use VR
         //EditorTool_Buttons.startFlashing += ActivateBtnFlash;
         EditorTool_Buttons.onClick += RunTrigger;
@@ -181,5 +183,23 @@ public abstract class MyButton_AbstractParent : MonoBehaviour
     protected virtual void AddtionalAction()
     {
         //For any derived class that wants to use an additional action when button is triggered
+    }
+
+    public virtual void DisableButtons()
+    {
+        Debug.Log("Disable all buttons Action");
+        buttonOn = false;
+        _flashing = false;
+        _interactable = false;
+        _meshRender.material.color = Color.black;
+    }
+
+    public virtual void EnableButtons()
+    {
+        Debug.Log("Disable all buttons Action");
+        buttonOn = false;
+        _flashing = false;
+        _interactable = true;
+        _meshRender.material.color = Color.red;
     }
 }
