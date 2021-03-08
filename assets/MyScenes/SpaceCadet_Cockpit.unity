@@ -3946,6 +3946,8 @@ PlayableDirector:
     value: {fileID: 1845041963}
   - key: {fileID: -2058727922428956628, guid: a627da137f84ad34385e52f1bcb3b99a, type: 2}
     value: {fileID: 2531079680093920569}
+  - key: {fileID: -4960603745140757937, guid: a627da137f84ad34385e52f1bcb3b99a, type: 2}
+    value: {fileID: 742542928}
   m_ExposedReferences:
     m_References:
     - 1f9c407f4b3f7974e9764dc1f5813c4f: {fileID: 2012629055}
@@ -6731,6 +6733,7 @@ GameObject:
   m_Component:
   - component: {fileID: 742542927}
   - component: {fileID: 742542926}
+  - component: {fileID: 742542929}
   - component: {fileID: 742542928}
   m_Layer: 0
   m_Name: GameManager
@@ -6786,6 +6789,8 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 0e1f2e669814cec44a1e9438731d6cb9, type: 2}
     - {fileID: 11400000, guid: 13f3cf74276c51044bc404f06f175917, type: 2}
     - {fileID: 11400000, guid: 2d926ca6c24df57418e2d05681367c33, type: 2}
+    - {fileID: 11400000, guid: b54944c7eef28644c89b0ed6bde95f9d, type: 2}
+    - {fileID: 11400000, guid: dc6aa5bddce4164488c3826b56032d02, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -6839,6 +6844,44 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 742542929}
+          m_MethodName: VibrateControllers
+          m_Mode: 4
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 2
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 742542929}
+          m_MethodName: VibrateControllers
+          m_Mode: 4
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0.5
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &742542929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 742542925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24dee06b87acc644aa8c388ce9c573c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &749200295 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1245630269128301273, guid: 1fb78497ba5a46b4aae9dfc88d66d2e9,
