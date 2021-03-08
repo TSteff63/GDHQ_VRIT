@@ -9,6 +9,8 @@ TagManager:
   - ShootableProps
   - PlayerPointer
   - MouthAreaToEat
+  - NewCore
+  - BadCore
   layers:
   - Default
   - TransparentFX
@@ -29,7 +31,7 @@ TagManager:
   - PlayerHands
   - MouthAreaToEat
   - FoodDrink
-  - 
+  - ParentNonPlayer_ColConflicts
   - 
   - 
   - 

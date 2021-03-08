@@ -7,10 +7,10 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Cockpit Assets LP_Cockpit Assets_AlbedoTransparency
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: _EMISSION _METALLICGLOSSMAP _NORMALMAP
-  m_LightmapFlags: 2
+  m_Name: ReactorButtons_Glowy
+  m_Shader: {fileID: 4800000, guid: cbe43107aeada7343b8445eef1cca08e, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -20,7 +20,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: ab943381f95cf4be3aa502c85cd9c729, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -35,16 +35,24 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _DisplacementGuide:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _EmissionMap:
-        m_Texture: {fileID: 2800000, guid: 5411d655f339a4896bd7ee509f19e78f, type: 3}
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 0.5, y: 0.5}
+        m_Offset: {x: 0.25, y: 0.25}
+    - _GradientMap:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 26012e5aa82cf470c8f481c202c43e32, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+        m_Texture: {fileID: 2800000, guid: 2c635ba82479d7a4b975a0a8bdf0a2df, type: 3}
+        m_Scale: {x: 0.5, y: 0.5}
+        m_Offset: {x: 0.25, y: 0.25}
     - _MetallicGlossMap:
-        m_Texture: {fileID: 2800000, guid: 4e0fc6b11f55e47b9b06291e479ce36c, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -55,23 +63,53 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SecondaryTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _Banding: 0
+    - _Bands: 3
     - _BumpScale: 1
-    - _Cutoff: 0.5
+    - _BurnSize: 0.4
+    - _CircleMask: 0
+    - _Contrast: 1
+    - _Culling: 2
+    - _Cutoff: 0.4
+    - _CutoffSoftness: 0.5
     - _DetailNormalMapScale: 1
+    - _DisplacementAmount: 0
     - _DstBlend: 0
     - _GlossMapScale: 1
-    - _Glossiness: 0
+    - _Glossiness: 0.75
     - _GlossyReflections: 1
+    - _InnerRadius: 0
+    - _IntersectionThresholdMax: 1
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
+    - _OuterRadius: 0.5
     - _Parallax: 0.02
+    - _PolarCoords: 0
+    - _Power: 1
+    - _RectHeight: 0
+    - _RectMask: 0
+    - _RectMaskCutoff: 0
+    - _RectSmoothness: 0
+    - _RectWidth: 0
+    - _SecondTex: 0
+    - _Smoothness: 0.2
     - _SmoothnessTextureChannel: 0
+    - _SoftBlend: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
+    - _VertexOffset: 0
+    - _VertexOffsetAmount: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EmissionColor: {r: 5.3403134, g: 5.3403134, b: 5.3403134, a: 1}
+    - _BurnCol: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.7058824, g: 0, b: 0, a: 1}
+    - _EmissionColor: {r: 0.25, g: 0, b: 0, a: 1}
+    - _PanningSpeed: {r: 0, g: 0, b: 0, a: 0}
+    - _SecondaryPanningSpeed: {r: 0, g: 0, b: 0, a: 0}

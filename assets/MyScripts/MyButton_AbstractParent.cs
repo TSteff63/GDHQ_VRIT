@@ -63,9 +63,15 @@ public abstract class MyButton_AbstractParent : MonoBehaviour
         //{
         //    GameManager.startFlashing_case3_PrepareToWarp += ActivateBtnFlash;
         //}
+        else if (caseID == 5)
+        {
+            GameManager.enableButtons_case5_TurnOnReactor += ActivateBtnFlash;
+        }
 
+        //This should affect all buttons of all cases
         GameManager.disableButtons_case4_RepairMode += DisableButtons;
         GameManager.enableButtons_case4_RepairMode += EnableButtons;
+
         //event to trigger flashing buttons without needing to use VR
         //EditorTool_Buttons.startFlashing += ActivateBtnFlash;
         EditorTool_Buttons.onClick += RunTrigger;

@@ -88,7 +88,12 @@ public class ThrowGrabbable : OVRGrabbable
             Debug.Log("resume glow");
             FX_glow.Play();
         }
+    }
 
+    public void ForceRelease()
+    {
+        grabbedBy.ForceRelease(this);
+        _grabbed = false;
 
     }
 }

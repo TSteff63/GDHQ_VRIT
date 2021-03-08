@@ -5,21 +5,24 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public enum timelinePosition {case0_Coffee, case1_SixteenButtons, case2_WarpSpeed, case3_AsteroidSequence, case4_RepairMode };
+    public enum timelinePosition {case0_Coffee, case1_SixteenButtons, case2_WarpSpeed, case3_AsteroidSequence, case4_RepairMode, 
+        case5_TurnOnReactor, case6_TimeToGoHome, case7_FreeFly };
 
-    //Event sender
+    //Event Listeners/Receivers
     public delegate void ActionCase();
     public static event ActionCase startFlashing_case0_Coffee;
     public static event ActionCase startFlashing_case1_SixteenButtons;
     public static event ActionCase startFlashing_case2_AutoPilot;
     public static event ActionCase disableButtons_case4_RepairMode;
     public static event ActionCase enableButtons_case4_RepairMode;
+    public static event ActionCase enableButtons_case5_TurnOnReactor;
 
     public timelinePosition enumPosition;
 
     private int buttonsPressed_top;
     private int buttonsPressed_btm;
     private bool reminderToPressBtnsVO_HasPlayed;
+    private int buttonsPressed_Reactor;
 
     [SerializeField]
     private GameObject AsteroidHolder;
@@ -35,7 +38,76 @@ public class GameManager : MonoBehaviour
 
         MyButton_PushTrigger_Derived.TopConsoleCountIncrease += IncreaseTopButtonCount;
         MyButton_PushTrigger_Derived.TopConsoleCountDecrease += DecreaseTopButtonCount;
+
+        MyButton_PushTrigger_Derived.ReactorCountIncrease += IncreaseReactorButtonCount;
+        MyButton_PushTrigger_Derived.ReactorCountDecrease += DecreaseReactorButtonCount;
     }
+
+    public void StateMachine(timelinePosition currentPosition)
+    {
+        switch (currentPosition)
+        {
+            //start of the game, Play initial audio, THEN coffee light flashes, player is prompted to push this button
+            case timelinePosition.case0_Coffee:
+                StartCoroutine(StartCaseZero());
+                //StartCoroutine(StartCaseZeroEDITORTEST());
+                break;
+
+            case timelinePosition.case1_SixteenButtons:
+                //Player has attempted to drink coffee, a new sound clip plays prompting the user to press flashing buttons
+                //these buttons are on the front middle console level to the player and front middle console above player, roughly 16 buttons will be flashing
+                StartCoroutine(StartCaseOne());
+                break;
+
+            case timelinePosition.case2_WarpSpeed:
+                StartCoroutine(StartCaseTwo());
+
+                //on success, another sound clip plays telling player to bress the flashing Throttle button...
+                //Once pressed, A new sound clip will play 'launching the ship'
+                //Music Track begins to play
+                //VO clip will play and player's ship will begin to follow a track out of the larger ship.
+                //at end of track, VO clip plays instructing player to flip open a cover that reveals another button to press.  This will enable the warp drive
+                break;
+
+            case timelinePosition.case3_AsteroidSequence:
+                StartCoroutine(StartCaseThree_EDITORTEST());
+                //warp sounds start to play and visuals begin to change
+                break;
+
+            case timelinePosition.case4_RepairMode:
+                StartCoroutine(StartCaseFour());
+                break;
+
+            case timelinePosition.case5_TurnOnReactor:
+                StartCoroutine(StartcaseFive());
+                //enables 4 reactor buttons to be pushed, once all four are pushed, timeline 3 plays and final warp button is enabled
+                break;
+
+            case timelinePosition.case6_TimeToGoHome:
+                StartCoroutine(StartcaseSix());
+                //starts timeline 4...
+                //warp is active, skybox changes, ship cruises near dreadnaughts, final vo plays, free flight becomes enabled
+                break;
+
+            case timelinePosition.case7_FreeFly:
+                StartCoroutine(StartcaseSeven());
+                //None of the buttons should be able to trigger voice.  Warp is disabled.  Turning Chair is disabled.
+                //Button to Credits becomes active
+                break;
+
+            default:
+                break;
+        }
+    }
+
+
+
+
+
+
+
+
+
 
 
 
@@ -199,45 +271,76 @@ public class GameManager : MonoBehaviour
 
 
 
-public void StateMachine(timelinePosition currentPosition)
+
+
+    IEnumerator StartcaseFive()
     {
-        switch (currentPosition)
+        //reactor buttons become active
+        yield return new WaitForSeconds(1);
+        if (enableButtons_case5_TurnOnReactor != null)
         {
-                //start of the game, Play initial audio, THEN coffee light flashes, player is prompted to push this button
-            case timelinePosition.case0_Coffee:
-                StartCoroutine(StartCaseZero());
-                //StartCoroutine(StartCaseZeroEDITORTEST());
-                break;
-
-            case timelinePosition.case1_SixteenButtons:
-                //Player has attempted to drink coffee, a new sound clip plays prompting the user to press flashing buttons
-                //these buttons are on the front middle console level to the player and front middle console above player, roughly 16 buttons will be flashing
-                StartCoroutine(StartCaseOne());
-                break;
-
-            case timelinePosition.case2_WarpSpeed:
-                StartCoroutine(StartCaseTwo());
-
-            //on success, another sound clip plays telling player to bress the flashing Throttle button...
-            //Once pressed, A new sound clip will play 'launching the ship'
-            //Music Track begins to play
-            //VO clip will play and player's ship will begin to follow a track out of the larger ship.
-            //at end of track, VO clip plays instructing player to flip open a cover that reveals another button to press.  This will enable the warp drive
-                break;
-
-            case timelinePosition.case3_AsteroidSequence:
-                StartCoroutine(StartCaseThree_EDITORTEST());
-                //warp sounds start to play and visuals begin to change
-                break;
-
-            case timelinePosition.case4_RepairMode:
-                StartCoroutine(StartCaseFour());
-                break;
-
-            default:
-                break;
+            enableButtons_case5_TurnOnReactor();
         }
     }
+
+    /// <summary>
+    /// Case 5 buttons - Turning the reactor back on
+    /// </summary>
+    private void IncreaseReactorButtonCount()
+    {
+        if (enumPosition == timelinePosition.case5_TurnOnReactor)
+        {
+            buttonsPressed_Reactor++;
+
+            if (buttonsPressed_Reactor == 4)
+            {
+                ManagerTimeline.Instance.PlayFromTimelines(3, 3);
+                //Start Timeline 3 that...
+                //fader plays
+                //chair turns back to front
+                //VO plays
+                //after VO clip finished...
+                //warp button changes which timeline and director it will start
+                //warp button becomes available to push
+                //warp button should activate the next time line (warp is active, skybox changes, ship cruises near dreadnaughts, vo plays...)
+            }
+        }
+    }
+    private void DecreaseReactorButtonCount()
+    {
+        if (enumPosition == timelinePosition.case5_TurnOnReactor)
+        {
+            buttonsPressed_Reactor--;
+        }
+    }
+
+
+
+
+
+
+
+
+
+    IEnumerator StartcaseSix()
+    {
+        //timeline 4 plays, warping player back to starting area and allowing free flight
+        yield return new WaitForSeconds(1);
+
+        ManagerTimeline.Instance.PlayFromTimelines(4, 4);
+    }
+
+
+
+
+
+    IEnumerator StartcaseSeven()
+    {
+        //manual flight controls enabled, other button actions disabled, all vo triggers disabled, credits button enabled
+        yield return new WaitForSeconds(1);
+
+    }
+
 
 
 

@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class MyButton_ThrottleButton_Derived : MyButton_AbstractParent
 {
-    //public static Action<int> OnPlayTimeline;
-
     [SerializeField]
     private bool hasAlreadyPlayed = false;
 
