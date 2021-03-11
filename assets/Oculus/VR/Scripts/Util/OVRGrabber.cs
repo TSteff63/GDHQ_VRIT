@@ -31,11 +31,11 @@ public class OVRGrabber : MonoBehaviour
     [SerializeField]
     protected bool m_parentHeldObject = false;
 
-	// If true, this script will move the hand to the transform specified by m_parentTransform, using MovePosition in
-	// Update. This allows correct physics behavior, at the cost of some latency. In this usage scenario, you
-	// should NOT parent the hand to the hand anchor.
-	// (If m_moveHandPosition is false, this script will NOT update the game object's position.
-	// The hand gameObject can simply be attached to the hand anchor, which updates position in LateUpdate,
+    // If true, this script will move the hand to the transform specified by m_parentTransform, using MovePosition in
+    // Update. This allows correct physics behavior, at the cost of some latency. In this usage scenario, you
+    // should NOT parent the hand to the hand anchor.
+    // (If m_moveHandPosition is false, this script will NOT update the game object's position.
+    // The hand gameObject can simply be attached to the hand anchor, which updates position in LateUpdate,
     // gaining us a few ms of reduced latency.)
     [SerializeField]
     protected bool m_moveHandPosition = false;
@@ -51,6 +51,8 @@ public class OVRGrabber : MonoBehaviour
     // Should be OVRInput.Controller.LTouch or OVRInput.Controller.RTouch.
     [SerializeField]
     protected OVRInput.Controller m_controller;
+    public OVRInput.Controller ReturnController()
+    { return m_controller; }
 
 	// You can set this explicitly in the inspector if you're using m_moveHandPosition.
 	// Otherwise, you should typically leave this null and simply parent the hand to the hand anchor

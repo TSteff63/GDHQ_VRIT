@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     public enum timelinePosition {case0_Coffee, case1_SixteenButtons, case2_WarpSpeed, case3_AsteroidSequence, case4_RepairMode, 
         case5_TurnOnReactor, case6_TimeToGoHome, case7_FreeFly };
 
-    //Event Listeners/Receivers
+    //Event Senders
     public delegate void ActionCase();
     public static event ActionCase startFlashing_case0_Coffee;
     public static event ActionCase startFlashing_case1_SixteenButtons;

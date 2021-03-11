@@ -8,6 +8,10 @@ public class MyButton_ThrottleButton_Derived : MyButton_AbstractParent
     [SerializeField]
     private bool hasAlreadyPlayed = false;
 
+    //if this is true, when the button is On.  Scene should end and transition to credits, which will return to the main menu.
+    [SerializeField]
+    private bool endGame;
+
     protected override void OnLogic()
     {
         base.OnLogic();
