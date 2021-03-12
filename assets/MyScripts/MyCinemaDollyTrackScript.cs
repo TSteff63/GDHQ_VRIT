@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Cinemachine
 {
-    public class MyCinemaDollyTrackScript : CinemachineDollyCart
+    public class MyCinemaDollyTrackScript : CinemachineDollyCartEditedCopy
     {
         public float initialSpeed;
         public float endSpeed;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class MyButton_ThrottleButton_Derived : MyButton_AbstractParent
@@ -28,6 +29,24 @@ public class MyButton_ThrottleButton_Derived : MyButton_AbstractParent
             //OnPlayTimeline(0);
             //prevents launch sequence from replaying due to multiple button presses
             hasAlreadyPlayed = true;
+        }
+
+        if (endGame)
+        {
+            LoadMainMenu();
+        }
+    }
+
+    public void enableEND()
+    {
+        endGame = true;
+        MyAudioManager.Instance.PlayMusicClip(3);
+    }
+
+    private void LoadMainMenu()
+    {
+        {
+            SceneManager.LoadScene(0);
         }
     }
 }

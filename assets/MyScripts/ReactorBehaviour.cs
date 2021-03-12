@@ -11,6 +11,9 @@ public class ReactorBehaviour : MonoBehaviour
     MyButton_ReactorChest _chestButton;
 
     [SerializeField]
+    GameManager script_GameManager;
+
+    [SerializeField]
     MeshRenderer mesh_BadCore;
     [SerializeField]
     AudioSource audio_BadCore;
@@ -39,7 +42,10 @@ public class ReactorBehaviour : MonoBehaviour
 
                 //Dummy core material emission should be black, only turns white when buttons are pressed to 'restart reactor'
                 DummyCore.SetActive(true);
+
                 //after buttons are pressed, emission turns white on dummy core, chair rotates back to original position
+                script_GameManager.enumPosition = GameManager.timelinePosition.case5_TurnOnReactor;
+                script_GameManager.StateMachine(GameManager.timelinePosition.case5_TurnOnReactor);
             }
             _audioPlayedAlready_goodCore = true;
         }

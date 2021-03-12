@@ -6,8 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/MyScenes/Week1BasketBall.unity
-    guid: 59f06ccf168444d4d9c2526a14dc56b0
+    path: Assets/MyScenes/TestUI.unity
+    guid: b8bc296b23073104597c30c67843faff
+  - enabled: 1
+    path: Assets/MyScenes/SpaceCadet_Cockpit.unity
+    guid: e1af2bfdc61a80d419e2f329623c724c
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 5ec1d34f026a61c49bc674235783b829,
       type: 2}

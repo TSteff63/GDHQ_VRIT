@@ -33,47 +33,64 @@ This should be a toggle action, hands should probably be deactivated while only 
 
 
     [Header("Movement")]
-    public float speed = 3f;
-    public float turnSpeed = 10f;
-    public float turnSpeedModified;
+    [SerializeField]
+    Flight_StickController script_FlightStick;
+    [SerializeField]
+    Flight_StickThrottle script_Throttle;
+    [SerializeField]
+    private float speed = 50;
+    [SerializeField]
+    private float turnSpeed = 10f;
     Vector3 m_EulerAngleVelocity;
-    public float maxVelocity = 3f;
+    [SerializeField]
+    private float maxVelocity = 3f;
+
+    private float lastVerticalInput;
 
     [Header("Components")]
     Rigidbody m_Rigidbody;
 
     [Header("Movement Conditions")]
-    public bool isManuallyDriving, isTurning, isManuallyTurboSpeed;
+    public bool isManuallyDriving, isTurning;
     [HideInInspector]
     public float horizontal, vertical;
 
+    [Header("Drive Enable")]
     public bool canDrive;
 
 
     void Awake()
     {
         m_Rigidbody = GetComponent<Rigidbody>();
-        turnSpeedModified = turnSpeed;
+    }
+
+    //called in timeline
+    public void enableDrive()
+    {
+        canDrive = true;
     }
 
     private void FixedUpdate()
     {
-        horizontal = Input.GetAxis("Horizontal");
-        vertical = Input.GetAxis("Vertical");
-        bool hasHorizontalInput = !Mathf.Approximately(horizontal, 0f);
-        bool hasVerticalInput = !Mathf.Approximately(vertical, 0f);
-
-
+        //horizontal = Input.GetAxis("Horizontal");
+        //vertical = Input.GetAxis("Vertical");
 
         if (canDrive)
         {
+            //lastVerticalInput = vertical;
+            vertical = (script_Throttle.ReturnSpeed());
+            //horizontal = (-script_FlightStick._correctedMoved.z * 10);
+
+            //bool hasHorizontalInput = !Mathf.Approximately(horizontal, 0f);
+            bool hasVerticalInput = !Mathf.Approximately(vertical, 0f);
+
             //if moving vertical or horizontal axis above or below 0, then isManuallyDriving is true...
             isManuallyDriving = hasVerticalInput;
-            isTurning = hasHorizontalInput;
-            isManuallyTurboSpeed = Input.GetKey(KeyCode.LeftShift);
+            //isTurning = hasHorizontalInput;
+
 
             Move(vertical);
-            Turning(horizontal);
+            Turning();
 
             Debug.Log("Vertical = " + vertical + " and horizontal = " + horizontal);
         }
@@ -84,27 +101,8 @@ This should be a toggle action, hands should probably be deactivated while only 
     //Moves our player using tank controls
     void Move(float vertical)
     {
-        if (vertical > 0)
-        {
-            speed = 50;
-        }
-        else if (vertical < 0)
-        {
-            speed = 30;
-        }
-
-        if (isManuallyTurboSpeed)//Player IS using turbos, speed and max velocity are increased.
-        {
-            //moves the character...  ForceMode.Impulse is like instant velocity, with no acceleration over time...
-            m_Rigidbody.AddForce(transform.forward * (speed * 2f) * vertical, ForceMode.Impulse);
-            //This sets our max velocity for our movement...
-            m_Rigidbody.velocity = Vector3.ClampMagnitude(m_Rigidbody.velocity.normalized * (maxVelocity * 2f), (maxVelocity * 2f));
-        }
-        else     //walking, not running
-        {
-            m_Rigidbody.AddForce(transform.forward * speed * vertical, ForceMode.Impulse);
-            m_Rigidbody.velocity = Vector3.ClampMagnitude(m_Rigidbody.velocity.normalized * maxVelocity, maxVelocity);
-        }
+        m_Rigidbody.AddForce(transform.forward * speed * vertical, ForceMode.Impulse);
+        m_Rigidbody.velocity = Vector3.ClampMagnitude(m_Rigidbody.velocity.normalized * maxVelocity, maxVelocity);
 
         //Insures our character stops moving when we aren't pressing vertical input...  resets velocity to 0,0,0. 
         if (!isManuallyDriving)
@@ -116,11 +114,15 @@ This should be a toggle action, hands should probably be deactivated while only 
 
 
     //Turns our character based on horizontal input...
-    void Turning(float horizontal)
+    void Turning()
     {
-        m_EulerAngleVelocity = new Vector3(0, turnSpeed, 0);
-        Quaternion deltaRotation = Quaternion.Euler(m_EulerAngleVelocity * horizontal);
-        m_Rigidbody.MoveRotation(m_Rigidbody.rotation * deltaRotation);
+        //m_EulerAngleVelocity = new Vector3(0, turnSpeed, 0);
+        //Quaternion deltaRotation = Quaternion.Euler(m_EulerAngleVelocity * horizontal);
+        //m_Rigidbody.MoveRotation(m_Rigidbody.rotation * deltaRotation);
+
+        //Physics.SyncTransforms();
+
+        transform.Rotate(script_FlightStick._correctedMoved);
 
         //Insures our character stops turning when we aren't pressing horizontal input...
         if (!isTurning)

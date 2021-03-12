@@ -50,18 +50,20 @@ public class MyAudioManager : MonoBehaviour
 
     public void PlayVOClip(int clip)
     {
+        _SFXSource.Stop();
         _VOSource.clip = _VO[clip];
         _VOSource.Play();
     }
     public void PlayMusicClip(int clip)
     {
+        _SFXSource.Stop();
         _MusicSource.clip = _music[clip];
         _MusicSource.Play();
     }
     public void PlaySFXClip(int clip)
     {
+        _SFXSource.Stop();
         _SFXSource.clip = _SFX[clip];
         _SFXSource.Play();
     }
-
 }

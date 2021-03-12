@@ -44,12 +44,29 @@ public class Flight_ShipItemListener : MonoBehaviour
         //revert changes (flight stick is not grabbed)
         else
         {
+            Debug.Log("Reverting Rigidbody and Layers on ship items");
             if (this.gameObject.layer != autoPilotLayer){                
                 this.gameObject.layer = autoPilotLayer;
             }
             if (_rb.isKinematic != _RBisKinematic){                
                 _rb.isKinematic = _RBisKinematic;
             }
+        }
+    }
+
+    public void MakeKinematic()
+    {
+        if (_rb.isKinematic != true)
+        {
+            _rb.isKinematic = true;
+        }
+    }
+
+    public void ReleaseKinematic()
+    {
+        if (_rb.isKinematic != false)
+        {
+            _rb.isKinematic = false;
         }
     }
 }

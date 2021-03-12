@@ -62,4 +62,20 @@ public class MyButton_TriggerChairTurnView : MyButton_AbstractParent
     {
         StartCoroutine(FadeOffset(false));
     }
+
+    //swap color based on yield return new WaitForSeconds value until the button is pressed or disabled by another method
+    protected override IEnumerator FlashingColors()
+    {
+        while (_flashing)
+        {
+            _meshRender.material.color = Color.green;
+            yield return new WaitForSeconds(0.33f);
+            _meshRender.material.color = Color.black;
+            yield return new WaitForSeconds(0.33f);
+            if (!_flashing)
+            {
+                _meshRender.material.color = Color.green;
+            }
+        }
+    }
 }

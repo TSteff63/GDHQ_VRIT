@@ -7,6 +7,8 @@ public class MyButton_ReactorChest : MyButton_AbstractParent
     //Chest grabbable parts "Handle"
     [SerializeField]
     GameObject reactorChestHandle;
+    [SerializeField]
+    Rigidbody reactorChestCover;
 
 
     protected override void OnLogic()
@@ -18,5 +20,8 @@ public class MyButton_ReactorChest : MyButton_AbstractParent
 
         //Chest grabbable parts becomes active to grab
         reactorChestHandle.SetActive(true);
+
+        //let's you use your hand to open chest, removes kinematic
+        reactorChestCover.isKinematic = false;
     }
 }
